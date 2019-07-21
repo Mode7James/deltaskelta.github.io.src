@@ -2,7 +2,7 @@
 title: Working With Large Datasets
 published: true
 createdAt: 2019-04-05T03:54:53.273Z
-updatedAt: 2019-06-05T01:49:28.886Z
+updatedAt: 2019-07-21T14:50:42.464Z
 images:
   - ./large-dataset-train-vs-cv.png
   - ./stochastic-gradient-descent-convergence.png
@@ -12,8 +12,6 @@ categories:
   - Machine Learning
   - Stanford
 ---
-
-import { M } from '../../../src/components/math';
 
 When working with large datasets, it can be computationally expensive, so it is best to figure out how many training
 examples you need before training with all of the examples.
@@ -31,7 +29,9 @@ having to load the entire dataset into memory when running gradient descent. Bec
 seeing the entire dataset on every run, it may take a more roundabout way when finding the minimum. For this reason, it
 may be necessary to run through the data multiple times.
 
-<M b="\theta_j := \theta_j - \alpha (h_\theta(x)^{(i)} - y^{(i)})x_j^{(i)}" />
+$$
+\theta_j := \theta_j - \alpha (h_\theta(x)^{(i)} - y^{(i)})x_j^{(i)}
+$$
 
 ```text
 random_shuffle(data)
@@ -48,12 +48,12 @@ endfor
 Instead of performing a full batch gradient descent, we can get the best of both worlds by loading less data into memory
 and still doing a vectorized calculation with mini batch gradient descent
 
-<M b="
+$$
 \begin{aligned}
   &b = 10 \quad m = 1000 \\
   &\theta_j := \theta_j - \alpha \frac{1}{10} \sum_{k=1}^{i + 9} (h_\theta(x^{(k)}) - y^{(k)})x^{(k)}_j
 \end{aligned}
-" />
+$$
 
 ## Checking For Convergence
 
@@ -65,6 +65,6 @@ and still doing a vectorized calculation with mini batch gradient descent
 If seeing non expected learning curves, try plotting the values over a different amount of iterations to either make a
 more noisy (fewer iterations) or more stable (more iterations) average of the curve.
 
-The learning rate can also be changed to be <M i="const / iterations + const"/> in order to deacrease alpha
+The learning rate can also be changed to be $ const / iterations + const $ in order to deacrease alpha
 as the number of iterations goes up. Without this, stochastic gradient descent is likely to meander around the minimum
 instead of converging at the optimum since it doesn't have the advantage of seeing the entire training set at once.

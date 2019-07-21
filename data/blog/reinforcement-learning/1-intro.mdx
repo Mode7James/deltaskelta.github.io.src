@@ -2,12 +2,10 @@
 title: Introduction
 published: true
 createdAt: 2019-07-07T11:42:46.361Z
-updatedAt: 2019-07-19T02:06:50.570Z
+updatedAt: 2019-07-21T15:18:33.434Z
 categories:
   - Reinforcement Learning
 ---
-
-import { M } from '../../../src/components/math.tsx'
 
 - reinforcement learning is concerned with what to do -- mapping situations to the best actions.
 - used where it is impractical to obtain examples of all actions that are correct and representative of all possible
@@ -100,9 +98,9 @@ that no policy changes). A non-greedy player will be able to discover new ways t
 > that we continue to make exploratory moves, which set of probabilities might be better to learn? What would result in
 > more wins?
 
-If we learn from exploratory moves then we are arbitrarily lowering the value of <M i="S_{t-1}" /> which could cause it
-to be unfavorable when deciding the action to arrive at <M i="S_{t-1}" /> even though we may have already learned that
-<M i="S_{t-1}" /> is the most favorable state.
+If we learn from exploratory moves then we are arbitrarily lowering the value of $ S_{t-1} $ which could cause it
+to be unfavorable when deciding the action to arrive at $ S_{t-1} $ even though we may have already learned that
+$ S_{t-1} $ is the most favorable state.
 
 Exploratory moves can be seen as *testing* whether this move is a good move or not. If we update before the test is
 complete (arriving at the next state), then we are updating a previous state on an incomplete test.
@@ -117,7 +115,7 @@ determine that we arrived at a favorable state.
 
 At first I thought it would be good to store the opponents probable moves, but then it occured to me that the opponents
 probable decisions are already baked into the state values because if the opponent is likely to make a strong (or
-winning) move from <M i="S_t" /> then <M i="S_t" /> would naturally decrease as learning progresses.
+winning) move from $ S_t $ then $ S_t $ would naturally decrease as learning progresses.
 
 ## Early History of Reinforcement Learning
 
@@ -169,11 +167,11 @@ reward of each of the actions over time in order to find the best one.
 
 ### Exercise 2.2
 
-> Consider a multi armed bandit problem with 4 actions. Initial estimates for all actions are <M i="Q_1(a) = 0" />. On
-> some of the steps, the <M i="\epsilon" /> case may have occured, causing an action to be selected at random. On which
+> Consider a multi armed bandit problem with 4 actions. Initial estimates for all actions are $ Q_1(a) = 0 $. On
+> some of the steps, the $ \epsilon $ case may have occured, causing an action to be selected at random. On which
 > time steps did this definitely occur? On which steps could it have possibly occured?
 
-<M b="
+$$
 \begin{aligned}
   A_1 = 1, R_1 = -1 \\
   A_2 = 2, R_2 = 1 \\
@@ -181,12 +179,12 @@ reward of each of the actions over time in order to find the best one.
   A_4 = 2, R_4 = 2 \\
   A_5 = 3, R_5 = 0
 \end{aligned}
-" />
+$$
 
-It definitely occured at <M i="A_4" /> because action 2's average was `-0.5` and it was still chosen.
-It definitely occured ar <M i="A_5" /> because actions 2's average was `0.33` and it chose action 3 instead.
+It definitely occured at $ A_4 $ because action 2's average was `-0.5` and it was still chosen.
+It definitely occured ar $ A_5 $ because actions 2's average was `0.33` and it chose action 3 instead.
 
-It possibly occured at <M i="A_1, A_2" /> because it chose from many 0 values in those steps.
+It possibly occured at $ A_1, A_2 $ because it chose from many 0 values in those steps.
 
 ### Exercise 2.3
 
@@ -197,14 +195,14 @@ Assumptions
 ------------
 1. the mean of an exploratory move is 0 according to figure 2.1
 
-<M b="
+$$
 \begin{aligned}
   \lim\limits_{t \rarr \infty} \epsilon_{0.1} = .9\mathcal{M} \\
   \lim\limits_{r \rarr \infty} \epsilon_{0.01} = .99\mathcal{M}
 \end{aligned}
-" />
+$$
 
-<M i="\epsilon_{0.01}" /> will learn slower, but as the number of steps reaches infinity, it will perform about 9%
+$ \epsilon_{0.01} $ will learn slower, but as the number of steps reaches infinity, it will perform about 9%
 better.
 
 ## Incremental Implementation
@@ -212,21 +210,25 @@ better.
 Storing all of the past rewards in order to calculate averages is too memory intensive, so incremental averages are used
 instead. Figure 2.3 in the book ends with this incremental average formula...
 
-<M b="Q_{n+1} = Q_n + \frac{1}{n} \lbrack R_n - Q_n \rbrack" />
+$$
+Q_{n+1} = Q_n + \frac{1}{n} \lbrack R_n - Q_n \rbrack
+$$
 
 ## Tracking a Non-stationary Problem
 
 In a nonstationary problem, the rewards are moving so it may make sense to give more weight to recent rewards by using a
 fixed step size parameter.
 
-<M b="Q_{n+1} = Q_n + \alpha \lbrack R_n - Q_n \rbrack" />
+$$
+Q_{n+1} = Q_n + \alpha \lbrack R_n - Q_n \rbrack
+$$
 
 ### Exercise 2.4
 
 > What is the weighting on each prior reward for the general case, analogous to 2.6 in terms of the sequence of step size
 > parameters?
 
-step `n` would be <M i="\alpha" /> weighted, step `n-1` would be <M i="\alpha^2" /> weighted, etc.
+step `n` would be $ \alpha $ weighted, step `n-1` would be $ \alpha^2 $ weighted, etc.
 
 ### Exercise 2.5 (Programming)
 
@@ -260,9 +262,11 @@ those are much more likely to be chosen at first.
 Instead of selecting actions at random, it could be useful to pick the next most likely action that would take over the
 position of being the greedy action. A formula that can do this is...
 
-<M b="A_t = \argmax_a \Big[ Q_t(a) + c \sqrt{\frac{\ln t }{N_t(a)}} \Big]" />
+$$
+A_t = \argmax_a \Big[ Q_t(a) + c \sqrt{\frac{\ln t }{N_t(a)}} \Big]
+$$
 
-<M i="Q_t(a)" /> is the estimated reward for action <M i="a" />. `c` is an exploration constant. As the time steps go
+$ Q_t(a) $ is the estimated reward for action $ a $. `c` is an exploration constant. As the time steps go
 up without selecting this action, the term under the square root increases and makes this action more likely to be
 chosen. As this action is chosen more often, the term will decrease and encourage it to be chosen less.
 
@@ -274,7 +278,7 @@ It is difficult to use this on non-stationary problems.
 > must explain both why reward increases on the 11th step and why it decreases on subsequent steps. (HINT: if `c` is `1`
 > then the spike is less prominent)
 
-If <M i="N_t(a)" /> is 0 then it is expected to be the maximizing action. This causes all actions to be taken once,
+If $ N_t(a) $ is 0 then it is expected to be the maximizing action. This causes all actions to be taken once,
 which causes the initial average to hover around 0. On the 11th step, it starts using the data that was gathered and
 spikes up sharply. `c` is set to 2 which encrouages more exploration because the second term will be favored more.
 
@@ -321,7 +325,7 @@ be `5.5`.
 
 ## Summary
 
-- <M i="\epsilon \text{-greedy}" /> algorithms choose randomly for some fraction of the time.
+- $ \epsilon \text{-greedy} $ algorithms choose randomly for some fraction of the time.
 - **UCB (Upper Confidence Bound)** methods choose dterministically, achieving exploration by favoring actions with fewer
   samples.
 - **Gradient Bandits** estimate action preferences, favoring more preferred actions in a graded probabalistic manner

@@ -2,13 +2,11 @@
 title: Matrices and Gaussian Elimination
 published: true
 createdAt: 2019-07-05T01:16:00.496Z
-updatedAt: 2019-07-09T04:13:23.027Z
+updatedAt: 2019-07-21T14:55:00.988Z
 categories:
   - Math
   - Linear Algebra
 ---
-
-import { M } from '../../../src/components/math.tsx';
 
 ## Preface and 1.2 The Geometry of Linear Equations
 
@@ -23,21 +21,29 @@ to be independent.
 
 A series of linear equations may not have a solution but it always has a best squares solution (regression).
 
-<M i="LU" /> decomposition factorizes a matrix into a lower triangular and upper triangular factors. **upper
+$ LU $ decomposition factorizes a matrix into a lower triangular and upper triangular factors. **upper
 triangular matrix** has numbers in the upper part of the triangle and `0`'s in the lower part. **lower triangular matrix**
 has numbers in the lower part and `0`'s in the upper part.
 
 during elimination, there is no solution when a set of linear equations is parallel or if they are on the same line. If
 you try to run gaussian elimination on the equations...
 
-<M b="1x + 2y = 3 \\ 4x + 8y = 6" />
+$$
+\begin{aligned}
+1x + 2y = 3 \\  4x + 8y = 6
+\end{aligned}
+$$
 
-you will see that you end up with the result <M i="0 = -6" />. If the equation was changed to be the smae line with
+you will see that you end up with the result $ 0 = -6 $. If the equation was changed to be the smae line with
 different coefficients, then the line would be parallel and have infinitely many solutions.
 
-<M b="1x + 2y = 3 \\ 4x + 8y = 12"/>
+$$
+\begin{aligned}
+1x + 2y = 3 \\ 4x + 8y = 12
+\end{aligned}
+$$
 
-The above equation would yield the result <M i="0 = 0" /> because they are the same line.
+The above equation would yield the result $ 0 = 0 $ because they are the same line.
 
 - in three dimensions, a line required two equations. In `n` dimensions, a line will require `n - 1` equations.
 
@@ -50,9 +56,9 @@ A **linear combination** is a combination of vectors that have been multiplied b
 together.
 
 When looking at a row picture, there are `n` planes, a column picture has `n` vectors. We are trying to find linear
-combinations of the n columns that equals the right side of the equation <M i="b" />.
+combinations of the n columns that equals the right side of the equation $ b $.
 
-An **invertible** matrix is also known as a **singular** matrix where <M i="AB = BA = I" /> where <M i="I" /> is the
+An **invertible** matrix is also known as a **singular** matrix where $ AB = BA = I $ where $ I $ is the
 identity matrix.
 
 A matrix **determinant** is a scalar property of the matrix which can be thought of a the physical volume enclosed by
@@ -63,7 +69,7 @@ space. If they are not independent, theb they will fill out the `n - (non indepe
 9 dimensions and only 8 of the columns are independent, then the columns will fill out the entire 8 dimensional plane
 within 9 dimensional space.
 
-<M b="
+$$
 \begin{aligned}
   \begin{bmatrix}
     2 & 5 \\
@@ -85,7 +91,7 @@ within 9 dimensional space.
     12 \\ 7
   \end{bmatrix}
 \end{aligned}
-"/>
+$$
 
 If `n` planes have no point in common, or infinitely many points, then the n columns lie in the same plane.
 
@@ -105,7 +111,7 @@ swapped to make a non-zero pivot, then there is either no solution or infinitely
 
 There will be no solution when remaining equations are inconsistent as in the following matrix.
 
-<M b="
+$$
 \begin{bmatrix}
   1 & 1 & 1 \\
   0 & 0 & 3 \\
@@ -114,7 +120,7 @@ There will be no solution when remaining equations are inconsistent as in the fo
 \begin{bmatrix}
   b_1 \\ 6 \\ 7
 \end{bmatrix}
-"/>
+$$
 
 This is becuase `3w = 6` and `4w = 7` have no compatible solution and therefore the whole set has no solution. If, in
 fact the last two rows of the matrix were `3w = 6` and `4w = 8` then there would be infinitely many solutions since
@@ -125,14 +131,14 @@ is not independent.
 
 matrices can be multiplied by other matrices that permute the rows as show below.
 
-<M b="
+$$
 P_{23} =
 \begin{bmatrix}
   1 & 0 & 0 \\
   0 & 0 & 1 \\
   0 & 1 & 0
 \end{bmatrix}
-" />
+$$
 
 What this matrix is doing is taking one of row one in the first line, taking one of row three in the second line, and
 taking one of row two in the third line which swaps column 2 and 3. Permutation matrices can be multiplied together if
@@ -140,33 +146,33 @@ in the right order to make their permutations happen simultaneously.
 
 ## LU Decomposition
 
-LU decomposition happens by the following formula <M i="PA = LU"/> where <m i="PA"/> is the permutation matrix to make
-sure that there will be no 0's in the pivots. <M i="L" is the lower trinagular matrix that stores how many of which
-columns were subtracted from the matrix to arrive at <M i="U" /> which is the upper trinagular matrix and can be used to
+LU decomposition happens by the following formula $ PA = LU $ where $ PA $ is the permutation matrix to make
+sure that there will be no 0's in the pivots. $ L" is the lower trinagular matrix that stores how many of which
+columns were subtracted from the matrix to arrive at $ U $ which is the upper trinagular matrix and can be used to
 solve the set of linear equations.
 
 ## Inverses
 
-- if you multiply something by <M i="A" /> and then by <M i="A^{-1}" /> then you are back to the starting point. <M
+- if you multiply something by $ A $ and then by $ A^{-1} $ then you are back to the starting point. <M
   i="\text{if } b = Ax \text{ then } A^{-1}b = x"/>.
-- <M i="AA^{-1} = I" />
-- multiplication order does not matter in inverses <M i="AB = I \text{ is also the same as } BA = I" />.
+- $ AA^{-1} = I $
+- multiplication order does not matter in inverses $ AB = I \text{ is also the same as } BA = I $.
 - the inverse exists only when elimination produces n pivots.
 - a mtrix cannot have more than one inverse.
-- if <M i="Ax = b" /> then the solution is <M i="x = A^{-1}b" />.
-- if x is a nonzero vector and <M i="Ax = 0" /> then <M i="A" /> is not invertible. Nothing can be multiplied by 0 to
-  get to <M i="x"/>.
+- if $ Ax = b $ then the solution is $ x = A^{-1}b $.
+- if x is a nonzero vector and $ Ax = 0 $ then $ A $ is not invertible. Nothing can be multiplied by 0 to
+  get to $ x $.
 - a matrix is invertible only if its determinant is nonzero.
 - a diagnoal matrix has an inverse as long as no entries are zero.
 - when solving matrix equation algebraically, the inverse matrices go in the reverse order on the other side of the
-  equation. <M i="ABx = y" /> is the same as <M i="x = B^{-1}A^{-1}y" />.
+  equation. $ ABx = y $ is the same as $ x = B^{-1}A^{-1}y $.
 - if there is a 0 vector in the matrix then the matrix is not invertible because nothing can take
 
 The Gauss-Jordan method of finding the inverse is to setup a matrix with the identity matrix as the augmented right side
 part and then run row reduce on all of the rows, until there is an identity matrix on the left and the inverse is on the
 right.
 
-<M b="
+$$
 \begin{bmatrix}
   2 & 1 & 1 & 1 & 0 & 0 \\
   4 & -6 & 0 & 0 & 1 & 0 \\
@@ -177,16 +183,16 @@ right.
   0 & 1 & 0 & \frac{4}{8} & -\frac{3}{8} & -\frac{2}{8} \\
   0 & 0 & 1 & -1 & 1 & 1 \\
 \end{bmatrix}
-"/>
+$$
 
 ## Transposes
 
-- <M i="AB^T = B^T A^T" />.
-- <M i="(A^{-1})^T = (A^T)^{-1}" />.
+- $ AB^T = B^T A^T $.
+- $ (A^{-1})^T = (A^T)^{-1} $.
 
 ## Symmetric Matrices
 
 - the diagonal can be anything as long as the lower and upper triangular parts are mirror images of each other.
-- if the matrix is invertible, then <M i="A^{-1}" /> is also invertible.
-- any matrix multiplied by its transposed self is symmetric. <M i="AA^T" /> is a symmetric square matrix. <M i="A^TA" />
+- if the matrix is invertible, then $ A^{-1} $ is also invertible.
+- any matrix multiplied by its transposed self is symmetric. $ AA^T $ is a symmetric square matrix. $ A^TA $
   is also a symmetric square matrix but it is different.

@@ -2,15 +2,13 @@
 title: Graph Decomposition
 published: true
 createdAt: 2019-04-24T12:57:59.674Z
-updatedAt: 2019-06-05T01:42:03.164Z
+updatedAt: 2019-07-21T15:18:58.245Z
 categories:
   - Programming
   - Algorithms
   - UC San Diego
   - Graph Algorithms
 ---
-
-import { M } from '../../../../src/components/math';
 
 ## Directed Acyclic Graphs
 
@@ -34,7 +32,7 @@ A strongly connected component is a set of vertices where there is a cycle that 
 other vertexes in the strongly connected component. A single vertex is a `SCC` and two vertexes where `v -> w` and `w ->
 v` is also a `SCC`.
 
-#### Naive Algorithm <M i="O(|V|^2 + |V||E|)" />
+#### Naive Algorithm $ O(|V|^2 + |V||E|) $
 
 ```text
 EasySCC(G)
@@ -52,10 +50,10 @@ this way, we can traverse the whole graph and remove all of the sinks until ther
 that we have a list of all of the `SCC`'s in the graph.
 
 The vertex with the largest postorder number is in a source component. If the order of each edge is
-reversed <M i="G_R" />, we could do the same operation which would give us the sink component of the original <M i="G" />.
+reversed $ G_R $, we could do the same operation which would give us the sink component of the original $ G $.
 
 Combining these three ideas together, we can find the `SCC`'s of a graph by using the following
-algorithm <M i="O(|V| + |E|)" />
+algorithm $ O(|V| + |E|) $
 
 ```text
 SCCs(G)

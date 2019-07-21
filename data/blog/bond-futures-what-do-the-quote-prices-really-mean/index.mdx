@@ -2,7 +2,7 @@
 title: "Bond Futures: What Do The Quote Prices Really Mean?"
 published: true
 createdAt: 2013-09-30T22:30:17.000Z
-updatedAt: 2019-04-19T04:47:31.491Z
+updatedAt: 2019-07-21T14:34:55.425Z
 images:
   - ./bond-futures-prices.png
   - ./bond-futures-tick-size.jpg
@@ -11,8 +11,6 @@ images:
 categories:
   - Finance
 ---
-
-import { M } from '../../../src/components/math';
 
 <props.imgs.Img1 align="center" width="100%" />
 
@@ -34,17 +32,17 @@ size by taking a quick look at the contract. I'll use a corn contract as an exam
 - The contract is for 5000 bushels
 - The minimum price movement is .25/cent
 - Because the minimum price movement is .0025/bushel and the contract is for 5000 bushels, one tick (minimum price move)
-will be ($0.0025*5000) which is $12.50/contract
+will be (\$0.0025*5000) which is \$12.50/contract
 
 ## Treasury Bills
 
 are short term U.S. government liabilities with a term of one year or less. Interest is paid in a lump sum at
 maturity. The bonds are sold at a discount to face value, and then the interest accrues and you collect a flat amount
-at maturity. (It might be sold to you for $995 and you would collect the face value of $1,000 at maturity.)
+at maturity. (It might be sold to you for \$995 and you would collect the face value of \$1,000 at maturity.)
 
 Treasury Notes are longer term U.S. government liabilities with a term of 1-10 years. Interest is paid semi-annually
-until maturity. (The principal is paid in a flat amount, like $200,000 and interest payments are made throughout the
-life of the bond. The principal of $200,000 would then be collected at the end.)
+until maturity. (The principal is paid in a flat amount, like \$200,000 and interest payments are made throughout the
+life of the bond. The principal of \$200,000 would then be collected at the end.)
 
 
 Treasury Bonds are even longer term U.S. government liabilities with a term of 10+ years. Interest is paid semi-
@@ -58,8 +56,8 @@ annually until maturity. (These are treated the same way that Treasury Notes are
 This type of contract is the easiest to understand. Take a look at the
 [contract specifications](http://www.cmegroup.com/trading/interest-rates/us-treasury/13-week-t-bill_contract_specifications.html).
 If you were to buy regular 13 week T-bills, __NOT a futures contract__, it would have a face value __at maturity__ of
-$1,000,000. This means that if you purchased the bill you would let the government borrow a smaller amount of money
-now, and they would pay you that amount plus some interest to equal $1,000,000 in 13 weeks time.
+\$1,000,000. This means that if you purchased the bill you would let the government borrow a smaller amount of money
+now, and they would pay you that amount plus some interest to equal \$1,000,000 in 13 weeks time.
 
 The futures contract, however, is not for the outright purchase of a T-bill; it is for right to purchase one in the
 future at today's interest rate. This contract is always settled in cash at the highest discount rate accepted by the
@@ -84,7 +82,7 @@ The quote price is (100 - treasury bill discount rate). This inverts the relatio
 quote price. If the discount rate goes up then the quote price will go down, and if the discount rate goes down the
 quote price will go up. Because of this, you would have to be long on the contract if you wanted to hedge or
 speculate on interest rates falling. This type of price quote is common for interest rate products that have a 1 year
-or less maturity date. The discount rate, in this case, is the rate at which $1,000,000 is discounted to get a
+or less maturity date. The discount rate, in this case, is the rate at which \$1,000,000 is discounted to get a
 present value of the bill. It is also the annual interest rate you will be paid for letting the government borrow
 your money.
 
@@ -92,20 +90,22 @@ If the quote price was 99.98 then you would be entering into a contract to be pa
 weeks (or 3/12 of a year) on the hypothetical future purchase of the bill at a different market interest rate. You
 can easily figure out what the current discounted present value is by doing some simple math...
 
-<M b="X*1.0002*\frac{3}{12}=$1,000,000" />
+$$
+X*1.0002*\frac{3}{12}=\$1,000,000
+$$
 
-So if you were to go to the treasury and buy this bill, you would give the government $999,950.00, and they would
-give you $100,000 in 13 weeks time if the market interest rate was 0.02%.
+So if you were to go to the treasury and buy this bill, you would give the government \$999,950.00, and they would
+give you \$100,000 in 13 weeks time if the market interest rate was 0.02%.
 
 ## The price movement
 
 The smallest allowable price movement for this contract is one half of one basis point (0.005%), which is
-$12.50/contract. This is figured by taking the smallest movement in the annual interest rate, multiplying that by the
+\$12.50/contract. This is figured by taking the smallest movement in the annual interest rate, multiplying that by the
 fraction of the year that the bill will be held, and multiplying it by the face value at maturity
-(0.00005 * 3/12 * $1,000,000 = $12.50).
+(0.00005 * 3/12 * \$1,000,000 = \$12.50).
 
 In the real world, if you were planning on purchasing a 13-week T-bill from the treasury, every interest rate
-fluctuation up or down of 0.005% would mean you would pay $12.50 more or less to receive $1,000,000 in 13 weeks.
+fluctuation up or down of 0.005% would mean you would pay \$12.50 more or less to receive \$1,000,000 in 13 weeks.
 
 As of this writing, 13 week T-bills (symbol: /GTB) are not actively traded. Other short term interest rate products
 such as the Eurodollar and 30-Day Fed Funds operate the same way though.
@@ -132,27 +132,29 @@ The U.S. Treasury Notes and Bond futures contracts differ T-bills and become har
 [CME contract specifications](http://www.cmegroup.com/trading/interest-rates/us-treasury/2-year-us-treasury-note_contract_specifications.html)
 for 2 year U.S. Treasury Note futures.
 
-If you were to go to the U.S. Treasury and buy a two year note with a face value of $200,000, you would give the
-government $200,000 now. They would then pay you interest payments every so often, and return the principal after 2
-years. The total amount you would receive back from them is $200,000 + the interest payments.
+If you were to go to the U.S. Treasury and buy a two year note with a face value of \$200,000, you would give the
+government \$200,000 now. They would then pay you interest payments every so often, and return the principal after 2
+years. The total amount you would receive back from them is \$200,000 + the interest payments.
 
 The futures contract is meant to simulate the buyer purchasing one U.S. Treasury note at a future date, at current
-interest rates, that has a face value at maturity of $200,000. Again, like the previous example with T-bills, this
+interest rates, that has a face value at maturity of \$200,000. Again, like the previous example with T-bills, this
 could be used to hedge or speculate against interest rate movements. Unlike the T-bills, these contracts will
 actually result in bonds being delivered if the position is not closed.
 
 ## The quote price
 
 The quote price becomes more complicated on these notes. First, you should know how to read it. For the 2 year U.S.
-Treasury Note futures, a quote price of 100'000 is made to equal $200,000 (present value) lent to the government at
-6% interest for two years to equal $200,000 (+ interest received) at maturity (future value).  Treasury notes do not
-compound interest so the total amount you would receive would be $224,000...
+Treasury Note futures, a quote price of 100'000 is made to equal \$200,000 (present value) lent to the government at
+6% interest for two years to equal \$200,000 (+ interest received) at maturity (future value).  Treasury notes do not
+compound interest so the total amount you would receive would be \$224,000...
 
-<M b="\$200,000 + (\$200,000*.06*2)" />
+$$
+\$200,000 + (\$200,000*.06*2)
+$$
 
-You can calculate that at a quote price of 100'000, the total of future interest payments would be $24,000. So at a
-futures quote price of 100'000 you would hypothetically pay $200,000 at a delivery date in the future and receive
-bonds which would make interest payments over the next two years totaling $24,000 plus the return of the principle
+You can calculate that at a quote price of 100'000, the total of future interest payments would be \$24,000. So at a
+futures quote price of 100'000 you would hypothetically pay \$200,000 at a delivery date in the future and receive
+bonds which would make interest payments over the next two years totaling \$24,000 plus the return of the principle
 after two years.
 
 You probably noticed that the quote price has an apostrophe in it. Numbers before the apostrophe are points, and
@@ -162,18 +164,26 @@ that decimals do. The first two digits represent 1/32, so 100'020 would be 100 p
 points (100') plus 1/32 ('01) and 1/4 of 1/32 ('002). The '002 is meant to represent the decimal of .025. Below are
 some more examples and their equivalents:
 
-<M b="100'052 = 100+\frac{5}{32}+\frac{\frac{1}{4}}{32}" />
+$$
+100'052 = 100+\frac{5}{32}+\frac{\frac{1}{4}}{32}
+$$
 
-<M b="100'105 = 100+\frac{10}{32}+\frac{\frac{2}{4}}{32}" />
+$$
+100'105 = 100+\frac{10}{32}+\frac{\frac{2}{4}}{32}
+$$
 
-<M b="100'157 = 100+\frac{15}{32}+\frac{\frac{3}{4}}{32}" />
+$$
+100'157 = 100+\frac{15}{32}+\frac{\frac{3}{4}}{32}
+$$
 
-<M b="107'310 = 107+\frac{31}{32}+\frac{\frac{0}{4}}{32}" />
+$$
+107'310 = 107+\frac{31}{32}+\frac{\frac{0}{4}}{32}
+$$
 
 This seems absolutely bizarre at first, but becomes easier to read with time. There is also a fundamental difference
 in what the quote price means. In the earlier example of T-bills, the quote price is the inverse of the interest rate
 (1-rate), but in the T-notes, an arbitrary interest rate is already stated in the contract.
-("a quote price of 100'000 is $200,000 lent at 6% for two years time.") The consequences of this will become more
+("a quote price of 100'000 is \$200,000 lent at 6% for two years time.") The consequences of this will become more
 apparent in the next section.
 
 ## The price movement?
@@ -183,24 +193,32 @@ value of the "6%" note has become more expensive and the yield has gone down. Wi
 (6% interest) as a baseline, if the price is below 100'000 then the interest rate must be above 6% and if the price
 is above 100'000 then the interest rate must be below 6%.
 
-The smallest allowable movement in price is 1/4 of 1/32 of a point or $15.625 per contract. You can arrive at this
-number by dividing $200,000 by the arbitrary base quote price at 6% which is 100'000....
+The smallest allowable movement in price is 1/4 of 1/32 of a point or \$15.625 per contract. You can arrive at this
+number by dividing \$200,000 by the arbitrary base quote price at 6% which is 100'000....
 
-<M b="\$200,000/100'000 =\$2,000\ per\ point" />
+$$
+\$200,000/100'000 =\$2,000\ per\ point
+$$
 
-<M b="\$2,000/32=\$62.5\ per\ \frac{1}{32}" />
+$$
+\$2,000/32=\$62.5\ per\ \frac{1}{32}
+$$
 
-<M b="\$62.5/4 =\$15.625\ per\ \frac{\frac{1}{4}}{32}" />
+$$
+\$62.5/4 =\$15.625\ per\ \frac{\frac{1}{4}}{32}
+$$
 
 The current price quote at the time of writing is 110'030. So if you followed the information above, you would
-hypothetically pay 10 points, and 3/32 ($20,187) above the face value of the "$200,000 @ 6%" bond which is $220,187.5
+hypothetically pay 10 points, and 3/32 (\$20,187) above the face value of the "\$200,000 @ 6%" bond which is \$220,187.5
 . So the effective interest rate (yield) is much lower than 6%. If you wanted to figure out what it would be, you
 have to do some simple math...
 
-<M b="\$220,187.5 + (\$220,187.5 * R *2) = \$224,000" />
+$$
+\$220,187.5 + (\$220,187.5 * R *2) = \$224,000
+$$
 
-At this quote price, if you were to take delivery, you would pay about $220,187.5 to receive 0.865% annual interest
-payments to total $3,812.5. Almost no one would opts to take delivery though. Delivery becomes even more complicated
+At this quote price, if you were to take delivery, you would pay about \$220,187.5 to receive 0.865% annual interest
+payments to total \$3,812.5. Almost no one would opts to take delivery though. Delivery becomes even more complicated
 as you will see below.
 
 ## The strange case of delivery
@@ -227,7 +245,7 @@ The price that the buyer of the bonds must pay for the bonds at delivery.
 
 ## Future settlement price
 
-The price at which the futures contract was settled (in the hypothetical case of this article, it is $220,187.5)
+The price at which the futures contract was settled (in the hypothetical case of this article, it is \$220,187.5)
 
 ## Conversion Factor
 
@@ -243,7 +261,7 @@ he didn't, he would be getting it for free which is crazy talk.
 
 So although the quote prices are strange, they do make logical sense when you derive them yourself. The tick value is
 determined by dividing the face value by the minimum movement of price (interest rate). This shows how much more or
-less one would have to pay up front to receive principal + interest payments totaling $224,000 in two years time. But
+less one would have to pay up front to receive principal + interest payments totaling \$224,000 in two years time. But
 the most important factor for me was learning that the futures prices don't mimic the current market interest rates
 because often what you are entering into a contract to buy or sell in the future is a derivative of the market
 interest rate and has many other factors in it as well.

@@ -2,7 +2,7 @@
 title: Knuth-Morris-Pratt Algorithm
 published: true
 createdAt: 2019-05-22T02:49:18.324Z
-updatedAt: 2019-06-05T01:36:45.718Z
+updatedAt: 2019-07-21T21:59:23.552Z
 categories:
   - Programming
   - Algorithms
@@ -10,14 +10,12 @@ categories:
   - String Algorithms
 ---
 
-import { M } from '../../../../src/components/math'
-
 Knuth-Morris-Pratt is a string searching algorithm that runs in linear time of the sum of the length of the pattern that
 is being searched and the length of the text. In order to do this, it used some smart methods to search for places in
 the string where it can skip searching by default instead of going along and searching by every character of the text.
 
-> A **border** of string <M i="S" /> is a prefix of <M i="S" /> which is equal to a suffix of <M i="S" />, but not equal
-> to the whole <M i="S" />.
+> A **border** of string $ S $ is a prefix of $ S $ which is equal to a suffix of $ S $, but not equal
+> to the whole $ S $.
 
 - `a` is a border of `arba`
 - `ab` is a border of `abcdab`
@@ -28,10 +26,12 @@ the string where it can skip searching by default instead of going along and sea
 
 This is a function of a string that returns the length of the longest border for each index of the string
 
-<M b="\begin{bmatrix}
+$$
+\begin{bmatrix}
     a & b & a & b & a & b & c & a & a & b \\
     0 & 0 & 1 & 2 & 3 & 4 & 0 & 1 & 1 & 2 \\
-\end{bmatrix}" />
+\end{bmatrix}
+$$
 
 In the above example, the first two indices have no border, but for the third index, there is a border length of 1
 because `aba` has a border of `a`. The 4th index has a border of `ab` which is of length 2. This continues counting the
@@ -61,7 +61,7 @@ ComputePrefixFunction(P)
 
 This constructs the prefix in linear time because the inner while loop is guaranteed to only run a linear amount of
 times. This is because the border length only increases by one on each iteration of the for loop and the while loop at
-most takes it back to `0` so it cannot run more than <M i="|P|" /> times total.
+most takes it back to `0` so it cannot run more than $ |P| $ times total.
 
 ## Knuth-Morris-Pratt Algorithm
 

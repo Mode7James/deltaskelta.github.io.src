@@ -2,7 +2,7 @@
 title: "Unsupervised Learning: Clustering"
 published: true
 createdAt: 2019-03-19T14:00:27.341Z
-updatedAt: 2019-06-05T01:47:04.711Z
+updatedAt: 2019-07-21T15:01:20.190Z
 categories:
   - Programming
   - Algorithms
@@ -10,8 +10,6 @@ categories:
   - Neural Networks
   - Stanford
 ---
-
-import { M } from '../../../src/components/math';
 
 ## K-Means Algorithm
 
@@ -31,7 +29,9 @@ for k = 1 to K
   u(k) := average of points assigned to cluster k
 ```
 
-<M b="J(C,M) = \frac{1}{m} \sum_{i=1}^m \begin{Vmatrix} x^{(i)} - \mu_{c^{(i)}} \end{Vmatrix}" />
+$$
+J(C,M) = \frac{1}{m} \sum_{i=1}^m \begin{Vmatrix} x^{(i)} - \mu_{c^{(i)}} \end{Vmatrix}
+$$
 
 - the first loop of the algorithm is actually minimizing a cost function with respect to the `C` vector, which contains
   the index of the centroid that the ith training example belongs to.

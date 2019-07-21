@@ -2,7 +2,7 @@
 title: "Machine Learning: Thinking About Design"
 published: true
 createdAt: 2019-03-14T01:56:11.402Z
-updatedAt: 2019-06-05T01:50:39.956Z
+updatedAt: 2019-07-21T15:05:33.995Z
 categories:
   - Programming
   - Algorithms
@@ -10,8 +10,6 @@ categories:
   - Neural Networks
   - Stanford
 ---
-
-import { M } from '../../../src/components/math';
 
 Before starting to build a network, it would be best to think very carefully about how to best go about it by
 brainstorming and testing ideas as much as possible. In the example of building a spam classifier, one could
@@ -33,21 +31,22 @@ to see what the specific issues with the problem set are. A good approach would 
 
 #### Accuracy
 
-Accuracy is defined as <M i="\frac{\text{true positives + true negatives}}{\text{total examples}}"/>. This gives
+Accuracy is defined as $ \frac{\text{true positives + true negatives}}{\text{total examples}} $. This gives
 the overall correctness of the predictions. If every positive was true and every negative was true, then this ratio
 would be 1.
 
 #### Precision
 
 Precision is the ratio of how many of the true classifications on the cross validation set were actually
-correct <M i="\frac{\text{true positive}}{\text{true positive} + \text{false positive}}" />.
+correct $ \frac{\text{true positive}}{\text{true positive} + \text{false positive}} $.
 In other words, of all of the predicted `true`s, how many were actually true? If it identified many false positives then
 the precision would be very low.
 
 #### Recall
 
-Recall is a similar metric that measures the ratio of <M i="\frac{\text{true positives}}{\text{true positives} + \text{false negatives}}"/>.
-If there are many false negatives, then this number will be lower.
+Recall is a similar metric that measures the ratio of
+$ \frac{\text{true positives}}{\text{true positives} + \text{false negatives}} $. If there are many false negatives,
+then this number will be lower.
 
 #### Interpretation
 
@@ -65,7 +64,9 @@ false positive flag or a higher false negative flag?
 
 In order to help choose a proper acceptable precision vs recall would be to use the following formula
 
-<M b="F_1 Score = 2 \frac{PR}{P+R}" />
+$$
+F_1 Score = 2 \frac{PR}{P+R}
+$$
 
 With this formula, if precision or recall is 0 (meaning that we were just predicting 1 or 0 the whole time), then the
 output score will be 0 (not good). A score closer to 1 is generally better.

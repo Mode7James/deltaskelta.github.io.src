@@ -2,7 +2,7 @@
 title: Burrows-Wheeler Transform
 published: true
 createdAt: 2019-05-20T02:45:44.505Z
-updatedAt: 2019-06-05T01:38:37.703Z
+updatedAt: 2019-07-21T21:58:16.752Z
 categories:
   - Programming
   - Algorithms
@@ -12,12 +12,10 @@ images:
   - ./suffix-array.png
 ---
 
-import { M } from '../../../../src/components/math';
-
 The Burrows-Wheeler transform is the last column of a sorted matrix of all of the rotations of a string with the `$`
-viewed as the first in the sort order. for example, the string <M i="ABACDCB\$" /> would turn out to be...
+viewed as the first in the sort order. for example, the string $ ABACDCB\$ $ would turn out to be...
 
-<M b="
+$$
 \begin{bmatrix}
  A & B & A & C & D & C & B & \$ \\
  \$ & A & B & A & C & D & C & B \\
@@ -40,22 +38,26 @@ viewed as the first in the sort order. for example, the string <M i="ABACDCB\$" 
  D & C & B & \$ & A & B & A & C
 \end{bmatrix}
 \rightarrow B\$BCADAC
-" />
+$$
 
 From this transform text we can construct the matrix by taking the column and sorting it to get the first column. We can
 then put the first column after the BW trasnform and sort it to get the first two columns. We can then repeat this
 process until we have the original matrix again.
 
-During the reconstruction we are sorting the text which takes <M i="O(|Text| \log |Text|)" /> to run. Sorting strings
-with length <M i="|Text|" /> will take <M i="O(|text|^2 \log |Text|)" /> and since we are sorting by lengths ranging
-from <M i="1 ... |Text|" /> then by using an infinite series sum we can arrive at the total sorting length of the
+During the reconstruction we are sorting the text which takes $ O(|Text| \log |Text|) $ to run. Sorting strings
+with length $ |Text| $ will take $ O(|text|^2 \log |Text|) $ and since we are sorting by lengths ranging
+from $ 1 ... |Text| $ then by using an infinite series sum we can arrive at the total sorting length of the
 strings...
 
-<M b="\sum_{k=1}^n k = \frac{n(n+1)}{2} \rightarrow |Text|(|Text| + 1) / 2" />
+$$
+\sum_{k=1}^n k = \frac{n(n+1)}{2} \rightarrow |Text|(|Text| + 1) / 2
+$$
 
 So then the running time would be evaluated as
 
-<M b="O(|Text| \log |Text| \frac{|Text^2| + Text}{2}) \rightarrow O(|Text|^3 \log |Text|)" />
+$$
+O(|Text| \log |Text| \frac{|Text^2| + Text}{2}) \rightarrow O(|Text|^3 \log |Text|)
+$$
 
 Reconstruction can be done qith a quicker algorithm by two special properties of the `Text` matrix
 
@@ -72,7 +74,7 @@ letter in the first column.
 4. The first column letter is now the next letter in the revered sequence, follow it to the last column and repeat this
 process until the `$` is reached in the last column
 
-<M b="
+$$
 \text{First Column}
 \begin{bmatrix}
 \$ \\
@@ -96,10 +98,10 @@ A \\
 \end{bmatrix}
 \rarr
 GAGAGA\$
-" />
+$$
 
-The runtime of the reconstruction is <M i="O(|Text|)" />. This runtime is assuming that there is a lookup time
-of <M i="O(1)" /> the <M i="i^{th}" /> occurence of the letter in the first and last column. This will need to be
+The runtime of the reconstruction is $ O(|Text|) $. This runtime is assuming that there is a lookup time
+of $ O(1) $ the $ i^{th} $ occurence of the letter in the first and last column. This will need to be
 constructed, but it should be doable in linear time as well.
 
 ## Pattern Matching With Burrows-Wheeler

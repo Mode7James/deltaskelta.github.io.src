@@ -2,7 +2,7 @@
 title: Currency Exchange
 published: true
 createdAt: 2019-04-23T04:06:47.688Z
-updatedAt: 2019-06-05T01:45:52.173Z
+updatedAt: 2019-07-21T21:55:10.656Z
 categories:
   - Programming
   - Algorithms
@@ -10,33 +10,40 @@ categories:
   - Graph Algorithms
 ---
 
-import { M } from '../../../../src/components/math';
-
 For this problem, they are using directed graphs to simulate the time when it is easy to move a currency in one
 direction but difficult to move it in the other direction. When trying to figure out the best path to take to increase
 profits, it is enough to add the logarithms of the exchange rates together because using logarithms, the following is
 true...
 
-<M b="
-  xy = 2^{log_2(x)}2^{\log_2(y)} = 2^{\log_2(x) + \log_2(y)} \\
+$$
+  xy = 2^{log_2(x)}2^{\log_2(y)} = 2^{\log_2(x) + \log_2(y)}
+$$
+
+$$
   xy  \rightarrow \max \Leftrightarrow \log_2(x) + \log_2(y) \rightarrow \max
-" />
+$$
 
 This means that the larger the sum of the logarithms of `x` and `y` are, the larger the product will be, and the smaller
 the sums, the smaller the product will be. This doesn't work without logarithms because in the case that the exchange
 rate is always `1/2`, if we were to just sum the factors together, the factor would be constantly
-increasing. <M i="\log_2(1/2) = -1" /> and so therefore adding the logarithms will give the same effect from the
+increasing. $ \log_2(1/2) = -1 $ and so therefore adding the logarithms will give the same effect from the
 increase as actually multiplying the numbers out. Concretely, if the exchange rate is `1 to 1` then the logarithm will
 be `0` and if the exchange rate is greater/less than `0` the summand will be respectively greater/less than `0`.
 
-<M b="
-  4 * 1 * 1/2 = 2^1 \\
-  \log_2(4) + \log_2(1) + \log_2(1/2) = 2 + 0 + (-1) = 1 \\
-  \prod_{j=1}^k r_{j} \rightarrow \max \Leftrightarrow \sum_{j=1}^k \log(r_{j}) \rightarrow \max
-" />
+$$
+  4 * 1 * 1/2 = 2^1
+$$
 
-If we wanted to make it a minimization problem, we could just replace the <M i="\log(r_j)" /> terms
-with <M i="-\log(r_j)" />, which would have the same intended effect.
+$$
+  \log_2(4) + \log_2(1) + \log_2(1/2) = 2 + 0 + (-1) = 1
+$$
+
+$$
+  \prod_{j=1}^k r_{j} \rightarrow \max \Leftrightarrow \sum_{j=1}^k \log(r_{j}) \rightarrow \max
+$$
+
+If we wanted to make it a minimization problem, we could just replace the $ \log(r_j) $ terms
+with $ -\log(r_j) $, which would have the same intended effect.
 
 > Dijkstra's algorithm will not work here because it doesn't work with negative weights between edges.
 
