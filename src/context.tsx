@@ -6,7 +6,6 @@ interface AppState {
   drawerOpen: boolean;
   mobile: boolean;
   toggleDrawer(): void;
-  toggleMobile(): void;
 }
 
 const defaultState = {

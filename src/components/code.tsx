@@ -12,12 +12,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface Props {
+export interface CodeProps {
   className: string; // className in this case is the markdown language after the backticks
   children: string | JSX.Element;
 }
 
-export const Code = ({ className, children }: Props) => {
+export const Code = ({ className, children }: CodeProps) => {
   const lang = className ? className.replace('language-', '') : 'text';
   const classes = useStyles();
   return (

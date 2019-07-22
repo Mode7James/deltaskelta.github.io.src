@@ -16,11 +16,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface Props {
+export interface BlockQuoteProps {
   children: Array<string | JSX.Element>;
 }
 
-export const BlockQuote = ({ children }: Props) => {
+export const BlockQuote = ({ children }: BlockQuoteProps) => {
   const classes = useStyles();
 
   return (

@@ -1,28 +1,49 @@
+import { Avatar, makeStyles, Theme } from '@material-ui/core';
 import { graphql } from 'gatsby';
 import React from 'react';
 import { GlobalLayout } from '../../components/Layout/global';
-import resumePDF from '../../jeff-willette-site.pdf';
+import { AboutPage } from '../../gatsby-queries';
+import { safe } from '../../utils';
 
-// interface Props {
-//   data: AboutPage;
-// }
+interface Props {
+  data: AboutPage;
+}
 
-// TODO: change this to query file from graphql and put the resume in the data folder
+const useStyles = makeStyles((_: Theme) => ({
+  avatar: {
+    width: 200,
+    height: 200,
+    margin: 'auto'
+  }
+}));
 
-export default () => {
-  // const { site } = safe(data);
+export default ({ data }: Props) => {
+  const classes = useStyles();
+  const { avatar } = safe(data);
+  const { childImageSharp } = safe(avatar);
+  const { fluid } = safe(childImageSharp);
+  const { src } = safe(fluid);
+
   // const { siteMetadata } = safe(site);
   // const { resume } = safe(siteMetadata);
   // return <Resume resume={safe(resume)} />;
+
   return (
     <GlobalLayout>
-      <embed width="100%" height="1000px" src={resumePDF} />
+      <Avatar src={src || undefined} className={classes.avatar} />
     </GlobalLayout>
   );
 };
 
 export const pageQuery = graphql`
   query AboutPage {
+    avatar: file(name: { eq: "jeff" }, extension: { eq: "png" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
+      }
+    }
     site {
       siteMetadata {
         resume {

@@ -51,6 +51,25 @@ export interface HeaderQuery {
 // GraphQL query operation: AboutPage
 // ====================================================
 
+export interface AboutPage_avatar_childImageSharp_fluid {
+  __typename: "ImageSharpFluid";
+  tracedSVG: string | null;
+  aspectRatio: number | null;
+  src: string | null;
+  srcSet: string | null;
+  sizes: string | null;
+}
+
+export interface AboutPage_avatar_childImageSharp {
+  __typename: "ImageSharp";
+  fluid: AboutPage_avatar_childImageSharp_fluid | null;
+}
+
+export interface AboutPage_avatar {
+  __typename: "File";
+  childImageSharp: AboutPage_avatar_childImageSharp | null;
+}
+
 export interface AboutPage_site_siteMetadata_resume_basics_location {
   __typename: "SiteSiteMetadataResumeBasicsLocation";
   address: string | null;
@@ -167,6 +186,7 @@ export interface AboutPage_site {
 }
 
 export interface AboutPage {
+  avatar: AboutPage_avatar | null;
   site: AboutPage_site | null;
 }
 

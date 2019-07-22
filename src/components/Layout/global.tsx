@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from './header';
 
-import { Collapse, List, ListItem, ListItemIcon, ListItemText, NoSsr, Theme, Typography } from '@material-ui/core';
+import { Collapse, List, ListItem, ListItemIcon, ListItemText, Theme, Typography } from '@material-ui/core';
+import { TypographyProps } from '@material-ui/core/Typography';
 import { ExpandLess, ExpandMore, LibraryBooks, Web } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import { MDXProvider } from '@mdx-js/react';
@@ -9,9 +10,9 @@ import c from 'classnames';
 import { navigate } from 'gatsby';
 import { StateConsumer } from '../../context';
 import { themeAddons } from '../../theme';
-import { AutolinkHeader } from '../AutolinkHeader';
-import { BlockQuote } from '../blockquote';
-import { Code } from '../code';
+import { AutolinkHeader, AutolinkHeaderProps } from '../AutolinkHeader';
+import { BlockQuote, BlockQuoteProps } from '../blockquote';
+import { Code, CodeProps } from '../code';
 import { Drawer, drawerWidth } from './drawer';
 import { Footer } from './footer';
 
@@ -134,23 +135,31 @@ export const GlobalLayout = ({ drawer, children }: Props) => {
   const [defaultItemOpen, toggleDefaultItem] = useState(false);
   const classes = useStyles();
 
+  // the key in the top level component is important because it forces react to re-evaluate the styles on the first render.
+  // without this, there will be erroring renders on the first paint in some situations.
+  const [isClient, setClient] = useState(false);
+  useEffect(() => {
+    setClient(true);
+  }, []);
+
   const components = {
-    h1: props => <AutolinkHeader {...props} variant="h1" />,
-    h2: props => <AutolinkHeader {...props} variant="h2" />,
-    h3: props => <AutolinkHeader {...props} variant="h3" />,
-    h4: props => <AutolinkHeader {...props} variant="h4" />,
-    h5: props => <AutolinkHeader {...props} variant="h5" />,
-    h6: props => <AutolinkHeader {...props} variant="h6" />,
-    p: props => <Typography className={classes.postP} {...props} variant="body1" />,
-    inlineCode: props => <span className={classes.code} {...props} />,
-    code: props => <Code {...props} />,
-    ul: props => <div className={classes.ul} children={<ul {...props} />} />,
-    ol: props => <div className={classes.ol} children={<ol {...props} />} />,
-    blockquote: props => <BlockQuote {...props} />
+    h1: (props: AutolinkHeaderProps) => <AutolinkHeader {...props} variant="h1" />,
+    h2: (props: AutolinkHeaderProps) => <AutolinkHeader {...props} variant="h2" />,
+    h3: (props: AutolinkHeaderProps) => <AutolinkHeader {...props} variant="h3" />,
+    h4: (props: AutolinkHeaderProps) => <AutolinkHeader {...props} variant="h4" />,
+    h5: (props: AutolinkHeaderProps) => <AutolinkHeader {...props} variant="h5" />,
+    h6: (props: AutolinkHeaderProps) => <AutolinkHeader {...props} variant="h6" />,
+    p: (props: TypographyProps) => <Typography className={classes.postP} {...props} variant="body1" />,
+    inlineCode: (props: React.HTMLProps<HTMLSpanElement>) => <span className={classes.code} {...props} />,
+    code: (props: CodeProps) => <Code {...props} />,
+    ul: (props: React.HTMLProps<HTMLUListElement>) => <div className={classes.ul} children={<ul {...props} />} />,
+    // tslint:disable-next-line
+    ol: (props: any) => <div className={classes.ol} children={<ol {...props} />} />,
+    blockquote: (props: BlockQuoteProps) => <BlockQuote {...props} />
   };
 
   return (
-    <MDXProvider components={components}>
+    <MDXProvider components={components} key={isClient}>
       <Header />
       <Drawer>
         <List>
@@ -182,20 +191,14 @@ export const GlobalLayout = ({ drawer, children }: Props) => {
       </Drawer>
       <StateConsumer>
         {({ mobile, drawerOpen }) => {
-          return (
-            <NoSsr>
-              {/* this is a hotfix to fix the erroneous ssr rendering */}
-              <main
-                className={c(classes.content, {
-                  [classes.contentShift]: drawerOpen && !mobile,
-                  [classes.contentPaddingOpen]: drawerOpen && !mobile,
-                  [classes.contentPadding]: !drawerOpen && !mobile,
-                  [classes.contentMobile]: mobile
-                })}
-                children={children}
-              />
-            </NoSsr>
-          );
+          const cl = c(classes.content, {
+            [classes.contentShift]: drawerOpen && !mobile,
+            [classes.contentPaddingOpen]: drawerOpen && !mobile,
+            [classes.contentPadding]: !drawerOpen && !mobile,
+            [classes.contentMobile]: mobile
+          });
+
+          return <main className={cl} children={children} />;
         }}
       </StateConsumer>
       <Footer />
