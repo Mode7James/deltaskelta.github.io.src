@@ -1,0 +1,133 @@
+---
+title: Dynamic Programming (Chapter 4 Exercises)
+published: true
+createdAt: 2019-07-19T02:10:31.993Z
+updatedAt: 2019-07-25T05:04:50.897Z
+categories:
+  - Reinforcement Learning
+---
+
+## Exercise 4.1
+
+> In example 4.1, if $\pi$ is the equiprobable rnadom policy, what is $q_{\pi}(11, down)$ and $q_{\pi}(7, down)$?
+
+$$
+\begin{aligned}
+  q_{\pi}(11, down) = 0 \\
+  q_{\pi}(7, down) = -1
+\end{aligned}
+$$
+
+## Exercise 4.2
+
+> In 4.2 if state 15 is added just below 13, 4 possible `l,r,u,d` actions take it to 12, 13, 14, and itself. What is
+> $v_{\pi}(15)$ for the equiprobably policy? What if state 13 adds a possible move to 15?
+
+**TODO (programming)**
+
+## Exercise 4.3
+
+What are the equations analogous to 4.3 - 4.5 fo the action value function $q_{\pi}$? and its successive approximation?
+
+$$
+q_{k+1}(s, a) = \sum_{s', r} p(s', r | s, a) \Big[ r + v_{k}(s')  \Big]
+$$
+
+## Exercise 4.4
+
+> The policy iteration algorithn on page 80 has a subtle bug in that it may never terminate if the policy continually
+> switches two or more policies that are equally good. Modify the pseudocode so that convergence is guaranteed.
+
+If the policies give different actions that re the same value, then the algorithm will continue forever because it only
+evaluates the action id and not the value. The line that needs to be changed is below
+
+```text
+If old-action != pi(s):
+  policy-stable <- false
+```
+
+should be changed to check to make sure there are different values given that the actions are different. An `and`
+condition could accomplish this.
+
+```text
+If old-action != pi(s) and v_pi(old-action) != v_pi(pi(s)):
+  policy-stable <- false
+```
+
+## Exercise 4.5
+
+> How would policy iteration be defined for action values? Give a complete algorithm for computing $q_*$, analogous to
+> that on page 80 for computing $v_*$. Please pay special attention to this exercise because ideas involved will be used
+> throughout the rest of the book.
+
+```text
+Q(s, a) <- random values
+pi(s) <- random and valid actions
+theta <- iota
+
+Evaluation(Q):
+  while true:
+    delta <- 0
+    for s of S:
+      for each a of pi(s):
+        q <- Q(s, a)
+        Q(s, a) <- Bellman(s, a)
+        delta <- max(delta, abs(q - Q(s, a)))
+    if delta < theta:
+      return Q
+
+Improvement(pi, Q):
+  for each s of S:
+    old-action <- pi(s)
+    pi(s) <- argmax(Q(s, a))
+    if old-action != pi(s) and Bellman(s, pi(s)) != Bellman(s, old-action):
+      return false
+  return true
+
+while true:
+  Q <- Evaluation(Q)
+  cont <- Improvement(pi, Q)
+  if !cont:
+    break
+```
+
+In the evaluation step, we have to evaluate every action in every state and only stop when we converge. $Q(s, a)$ will
+be storing the values for every action in every state.
+
+In the improvement step, we need to check our policy for every state, if our valuation has evolved such that an action
+has a higher value than what the greedy policy tells us to take, then we need to update our policy to take the now
+better greedy action.
+
+Something that is hidden here is the `Bellman()` equation which by definition takes the $v_{\pi}(s')$ greedy action after
+taking one step of the $q_{\pi}(s, a)$ exploratory action. The $v_{\pi}(s')$ action is dependent on the policy which
+changes in the improvement step and this is why the iteration needs to continue in a evaluation -> improvement loop.
+
+## Exercise 4.6
+
+> Suppose you are restricted to considering only policies that are $\epsilon-\text{soft}$ meaning that the probability of
+> selecting each action in each state $s$ is at least $\epsilon/|A(s)|$ Describe qualitatively the changes that would be
+> required in each of the steps 3, 2, 1 of the policy iteration algorithm for $v_*$ on page 80
+
+**TODO**
+
+## Exercise 4.7
+
+**TODO**
+
+## Exercise 4.8
+
+> Why does the optimal policy for the gamblers problem have such a curious form? In particular, for capital of 50, it
+> bets everything on one flip, but for 51, it does not. WHy is this a good policy?
+
+This is a good policy because it wants to make the least amount of bets possible while still getting to the goal. At
+capital 50, it can get there in one shot so it takes it. At capital 51, it could get there in one shot, but it could
+also "bank" the 50 and use the extra one to try to get to 75 which is a non zero probability. It could then bet only 25
+to reach its final goal.
+
+## Exercise 4.9
+
+**TODO**
+
+## Exercise 4.10
+
+**TODO**
